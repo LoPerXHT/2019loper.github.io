@@ -152,6 +152,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java连接数据库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/11/Java连接数据库/">Java连接数据库</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/11/Java连接数据库/" class="archive-article-date">
+  	<time datetime="2019-11-11T11:25:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="java连接数据库"><a href="#java连接数据库" class="headerlink" title="java连接数据库"></a>java连接数据库</h2><p>java连接数据库的代码如下：<br>新建一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.ResultSet;</span><br><span class="line"><span class="keyword">import</span> java.sql.Statement;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * MySQL连接</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySqlConn</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			 <span class="comment">//加载MYSQL JDBC驱动程序   (MySQL8版本)</span></span><br><span class="line">			Class.forName(<span class="string">"com.mysql.cj.jdbc.Driver"</span>);    </span><br><span class="line">			  <span class="comment">//加载MYSQL JDBC驱动程序	(之前版本)   </span></span><br><span class="line">			Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);   </span><br><span class="line">			System.out.println(<span class="string">"Success loading Mysql Driver!"</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">				System.out.print(<span class="string">"Error loading Mysql Driver!"</span>);</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line"><span class="comment">//				MySQL8版本url连接语句：后面的2个参数分别是登陆用户名和密码</span></span><br><span class="line">				Connection connect = DriverManager.getConnection(<span class="string">"jdbc:mysql://127.0.0.1:3306/stu?useSSL=false&amp;serverTimezone=UTC"</span>, <span class="string">"root"</span>,</span><br><span class="line">						<span class="string">"root"</span> + <span class="string">""</span>);</span><br><span class="line"><span class="comment">//				MySQL之前版本url连接语句：</span></span><br><span class="line">				Connection connect = DriverManager.getConnection(<span class="string">"jdbc:mysql://127.0.0.1:3306/stu"</span>, <span class="string">"root"</span>,</span><br><span class="line">						<span class="string">"root"</span> + <span class="string">""</span>);</span><br><span class="line">				<span class="comment">// 连接URL为 jdbc:mysql//服务器地址/数据库名 ，后面的2个参数分别是登陆用户名和密码</span></span><br><span class="line">	 </span><br><span class="line">				System.out.println(<span class="string">"Success connect Mysql server!"</span>);</span><br><span class="line">				Statement stmt = connect.createStatement();</span><br><span class="line">				ResultSet rs = stmt.executeQuery(<span class="string">"select * from user"</span>);</span><br><span class="line">				<span class="comment">// user 为你表的名称</span></span><br><span class="line">				<span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">					System.out.println(rs.getString(<span class="string">"pwd"</span>));					</span><br><span class="line">				&#125;</span><br><span class="line">	    &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">	    	System.out.print(<span class="string">"get data error!"</span>);</span><br><span class="line">	    	e.printStackTrace();</span><br><span class="line">	    &#125;</span><br><span class="line">	  &#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/11/11/Java连接数据库/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SQL-WARN-Establishing-SSL-connection-without-server-s-identity-verification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -568,10 +633,6 @@
 <li><p>转发2次跳转之间传输的信息不会丢失，重定向2次跳转之间传输的信息会丢失（request范围）。</p>
 </li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">服务萨尔设法色粉</span><br></pre></td></tr></table></figure>
-
-<h1 id><a href="#" class="headerlink" title></a></h1><h1 id="sfsfdzdvzxd"><a href="#sfsfdzdvzxd" class="headerlink" title="sfsfdzdvzxd"></a>sfsfdzdvzxd</h1><p>sdds </p>
-<p>dss </p>
 
       
 
